@@ -2,19 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HSE Mobile Checklist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HSE Checklist App</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h2>📋 HSE Mobile Checklist</h2>
-    <div id="checklistContainer"></div>
+    <h2>HSE Mobile Checklist</h2>
+    <div id="checklist"></div>
+
     <textarea id="notes" placeholder="Additional Notes..."></textarea>
-    <button onclick="downloadChecklist()">📥 Download</button>
-    <button onclick="shareChecklist()">📤 Share via Email</button>
+
+    <button onclick="downloadReport()">Download</button>
+    <button onclick="shareViaEmail()">Share via Email</button>
   </div>
+
+  <div id="report" style="display:none;"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
