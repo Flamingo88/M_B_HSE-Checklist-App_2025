@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HSE Mobile Checklist</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>HSE Mobile Checklist</h1>
+    <div id="checklist" class="checklist">
+      <div class="item" onclick="toggleCheck(this)">
+        <span class="checkbox"></span>
+        <p>Ensure all emergency exits are free of obstructions</p>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <span class="checkbox"></span>
+        <p>Fire extinguishers are inspected and up to date</p>
+      </div>
+      <div class="item" onclick="toggleCheck(this)">
+        <span class="checkbox"></span>
+        <p>Trip hazards or cable hazards are cleared</p>
+      </div>
+    </div>
+    <textarea id="notes" placeholder="Additional Notes..."></textarea>
+    <button onclick="downloadChecklist()">📥 Download</button>
+    <button onclick="shareChecklist()">📤 Share via Email</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
