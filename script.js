@@ -1,3 +1,4 @@
+// Define checklist items
 const checklistItems = [
   { label: "Are escape routes clear", info: "Ensure all emergency exits are free of obstructions and clearly marked." },
   { label: "Good lighting", info: "Check that workspaces and walkways are well-lit with functioning lights." },
@@ -13,37 +14,50 @@ const checklistItems = [
   { label: "First aid is stocked and not expired", info: "Open kit and confirm all items are valid and stocked." }
 ];
 
-const container = document.getElementById("checklistContainer");
-checklistItems.forEach((item, i) => {
-  const div = document.createElement("div");
-  div.className = "item";
-  div.innerHTML = \`
-    <input type="checkbox" id="item\${i}" onchange="toggleCheck(this)">
-    <label for="item\${i}"><strong>\${item.label}:</strong> \${item.info}</label>
-  \`;
-  container.appendChild(div);
-});
+// Render checklist items
+window.onload = () => {
+  const container = document.querySelector(".checklist-container");
+  checklistItems.forEach((item, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <input type="checkbox" id="item${i}" />
+      <div>
+        <label for="item${i}">${item.label}</label>
+        <div class="info">${item.info}</div>
+        <textarea class="notes" id="note${i}" placeholder="Notes..."></textarea>
+      </div>
+    `;
+    container.appendChild(card);
 
-function toggleCheck(box) {
-  if (box.checked) {
-    box.parentElement.classList.add("checked");
-  } else {
-    box.parentElement.classList.remove("checked");
-  }
-}
+    // Checkbox toggle for card styling
+    const checkbox = card.querySelector("input");
+    checkbox.addEventListener("change", () => {
+      card.classList.toggle("checked", checkbox.checked);
+    });
+  });
+};
 
-function downloadChecklist() {
-  html2canvas(document.querySelector(".container")).then(canvas => {
+// Download report as image (PNG for now)
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  const el = document.body;
+
+  html2canvas(el, {
+    scrollY: -window.scrollY,
+    scale: 2
+  }).then(canvas => {
+    const image = canvas.toDataURL("image/png");
     const link = document.createElement("a");
-    link.download = "HSE_Checklist_Report.png";
-    link.href = canvas.toDataURL("image/png");
+    link.download = `HSE-Checklist-${new Date().toISOString().slice(0,10)}.png`;
+    link.href = image;
     link.click();
   });
-}
+});
 
-function shareChecklist() {
-  const subject = encodeURIComponent("HSE Checklist Report");
-  const notes = encodeURIComponent(document.getElementById("notes").value);
-  const body = encodeURIComponent("Attached is my HSE checklist.\n\nNotes:\n" + notes);
-  window.location.href = \`mailto:?subject=\${subject}&body=\${body}\`;
-}
+// Fake email share
+document.getElementById("emailBtn").addEventListener("click", () => {
+  const email = prompt("Enter your email to receive the report:");
+  if (email) {
+    alert(`Sharing report to ${email} (feature in development)`);
+  }
+});
