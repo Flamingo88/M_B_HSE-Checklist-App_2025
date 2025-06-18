@@ -13,36 +13,37 @@ const checklistItems = [
   { label: "First aid is stocked and not expired", info: "Open kit and confirm all items are valid and stocked." }
 ];
 
-const checklistDiv = document.getElementById('checklist');
-
-checklistItems.forEach((item, index) => {
-  const container = document.createElement('div');
-  container.className = 'check-item';
-
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.id = `check${index}`;
-
-  const info = document.createElement('div');
-  info.className = 'check-info';
-  info.innerHTML = `
-    <label for="check${index}"><strong>${item.label}</strong></label>
-    <p>${item.info}</p>
-    <textarea rows="2" placeholder="Notes..."></textarea>
-  `;
-
-  container.appendChild(checkbox);
-  container.appendChild(info);
-  checklistDiv.appendChild(container);
+const container = document.getElementById("checklistContainer");
+checklistItems.forEach((item, i) => {
+  const div = document.createElement("div");
+  div.className = "item";
+  div.innerHTML = \`
+    <input type="checkbox" id="item\${i}" onchange="toggleCheck(this)">
+    <label for="item\${i}"><strong>\${item.label}:</strong> \${item.info}</label>
+  \`;
+  container.appendChild(div);
 });
 
-function downloadPDF() {
-  alert("Download PDF feature coming soon...");
+function toggleCheck(box) {
+  if (box.checked) {
+    box.parentElement.classList.add("checked");
+  } else {
+    box.parentElement.classList.remove("checked");
+  }
 }
 
-function shareViaEmail() {
-  const email = prompt("Enter email address to send report to:");
-  if (email) {
-    alert("Sharing report to " + email + " (feature in development)");
-  }
+function downloadChecklist() {
+  html2canvas(document.querySelector(".container")).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "HSE_Checklist_Report.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+function shareChecklist() {
+  const subject = encodeURIComponent("HSE Checklist Report");
+  const notes = encodeURIComponent(document.getElementById("notes").value);
+  const body = encodeURIComponent("Attached is my HSE checklist.\n\nNotes:\n" + notes);
+  window.location.href = \`mailto:?subject=\${subject}&body=\${body}\`;
 }
