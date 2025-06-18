@@ -1,25 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HSE Checklist App</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSE Mobile Checklist</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h2>HSE Mobile Checklist</h2>
-    <div id="checklist"></div>
-
-    <textarea id="notes" placeholder="Additional Notes..."></textarea>
-
-    <button onclick="downloadReport()">Download</button>
-    <button onclick="shareViaEmail()">Share via Email</button>
+    <form id="checklistForm">
+      <div id="checklistContainer"></div>
+      <textarea id="notes" placeholder="Additional Notes..."></textarea>
+      <button type="button" onclick="downloadChecklist()">Download</button>
+      <button type="button" onclick="shareChecklist()">Share via Email</button>
+    </form>
   </div>
 
-  <div id="report" style="display:none;"></div>
+  <script>
+    const checklistItems = [
+      { label: "Are escape routes clear", info: "Ensure all emergency exits are free of obstructions and clearly marked." },
+      { label: "Good lighting", info: "Check that workspaces and walkways are well-lit with functioning lights." },
+      { label: "Fire extinguishers inspected", info: "Check the stamp or tag for the last service date. Take a photo if needed." },
+      { label: "Fire hydrant accessible and not expired", info: "Check hydrant accessibility and validity tag. BAS: 4, Metronor: 5." },
+      { label: "Trip hazards or cable hazards", info: "Look for loose cables, power cords, uneven floors, or obstacles." },
+      { label: "Chemical safety (use & smell)", info: "Ensure proper labeling, PPE use, ventilation, and no unusual odors." },
+      { label: "Hygiene equipment available", info: "Check sanitizers, soap, and wipes are present and not empty." },
+      { label: "Office emergency exit map is correct", info: "Locate and verify map accuracy with the current layout." },
+      { label: "Protective gear is properly located", info: "Inspect PPE stations for completeness and accessibility." },
+      { label: "T5 truck routines followed", info: "Ensure forklift is parked, charged, and logbook updated." },
+      { label: "Chemical book updated to latest version", info: "Verify the latest chemical registry entry is logged." },
+      { label: "First aid is stocked and not expired", info: "Open kit and confirm all items are valid and stocked." }
+    ];
 
-  <script src="script.js"></script>
+    const container = document.getElementById("checklistContainer");
+    checklistItems.forEach((item, index) => {
+      const block = document.createElement("div");
+      block.className = "checklist-item";
+      block.innerHTML = `
+        <label>
+          <input type="checkbox" class="checkbox" id="check${index}" onclick="toggleCheck(this)">
+          <span class="custom-check"></span>
+          <strong>${item.label}</strong><br>
+          <small>${item.info}</small>
+        </label>
+      `;
+      container.appendChild(block);
+    });
+
+    function toggleCheck(checkbox) {
+      checkbox.nextElementSibling.classList.toggle("checked", checkbox.checked);
+    }
+
+    function downloadChecklist() {
+      let result = "HSE Checklist\n\n";
+      checklistItems.forEach((item, index) => {
+        const checked = document.getElementById(`check${index}`).checked ? "[x]" : "[ ]";
+        result += `${checked} ${item.label}\n`;
+      });
+      result += `\nNotes: ${document.getElementById("notes").value}`;
+
+      const blob = new Blob([result], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "hse_checklist.txt";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function shareChecklist() {
+      const email = "oines88@gmail.com";
+      alert(`Sharing report to ${email} (feature in development)`);
+    }
+  </script>
 </body>
 </html>
