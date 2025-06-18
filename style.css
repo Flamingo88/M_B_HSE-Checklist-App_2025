@@ -1,52 +1,90 @@
 body {
-  font-family: sans-serif;
-  background: #f1f3f6;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #f0f2f5, #d9e1e8);
   margin: 0;
-  padding: 10px;
+  padding: 20px;
+  color: #333;
 }
-.container {
+
+h1 {
+  text-align: center;
+  color: #1976d2;
+  margin-bottom: 20px;
+}
+
+.checklist-container {
   max-width: 600px;
   margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 10px;
 }
-h2 {
-  color: #007bff;
-}
-.item {
+
+.card {
+  background-color: #f4f6f8;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   display: flex;
-  align-items: center;
-  background: #eee;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 8px;
+  align-items: flex-start;
+  gap: 15px;
+  transition: background 0.2s ease;
 }
-.item.checked {
-  background: #cce5ff;
+
+.card.checked {
+  background-color: #e3f2fd;
 }
-.item input[type="checkbox"] {
-  margin-right: 10px;
-  transform: scale(1.5);
+
+.card input[type="checkbox"] {
+  accent-color: #1976d2;
+  transform: scale(1.4);
+  margin-top: 4px;
 }
-textarea {
+
+.card label {
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.card .info {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 4px;
+  white-space: pre-wrap;
+}
+
+textarea.notes {
   width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+textarea.notes:focus {
+  outline: 2px solid #1976d2;
+}
+
+textarea#additionalNotes {
+  margin-top: 25px;
   height: 100px;
-  margin-top: 10px;
-  padding: 10px;
-  font-size: 1em;
 }
+
 button {
-  margin-top: 10px;
-  padding: 10px;
   width: 100%;
-  font-size: 1em;
+  padding: 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   color: white;
-  background: #007bff;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 1rem;
 }
-button:last-of-type {
-  background: #0056b3;
+
+button.download-btn {
+  background-color: #1976d2;
+}
+
+button.share-btn {
+  background-color: #0d47a1;
 }
