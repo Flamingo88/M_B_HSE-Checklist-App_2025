@@ -3,28 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HSE Checklist – Metronor & BAS</title>
-  <link rel="stylesheet" href="style.css">
+  <title>HSE Mobile Checklist</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>HSE Checklist <span>Metronor - BAS</span></h1>
-
-    <div class="inspector">
-      <label for="inspectorName">Inspector Name:</label>
-      <input type="text" id="inspectorName" placeholder="Enter name...">
-    </div>
-
-    <div id="checklist"></div>
-
+    <h2>📋 HSE Mobile Checklist</h2>
+    <div id="checklistContainer"></div>
     <textarea id="notes" placeholder="Additional Notes..."></textarea>
-
-    <div class="buttons">
-      <button onclick="downloadPDF()">⬇ Download</button>
-      <button onclick="shareViaEmail()">📤 Share via Email</button>
-    </div>
+    <button onclick="downloadChecklist()">📥 Download</button>
+    <button onclick="shareChecklist()">📤 Share via Email</button>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
